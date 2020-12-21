@@ -1,0 +1,33 @@
+{
+  "name": "param-handler",
+  "version": "1.0.0",
+  "description": "this is a library that allowes you to control query params location search",
+  "main": "./lib/index.js",
+  "scripts": {
+    "test": "echo \"hello\"",
+    "build": "tsc",
+    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
+    "lint": "tslint -p tsconfig.json",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm test && npm run lint",
+    "preversion": "npm run lint",
+    "version": "npm run format && git add -A src",
+    "postversion": "git push && git push --tags"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "prettier": "^2.2.1",
+    "tslint": "^6.1.3",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^4.1.3"
+  },
+  "dependencies": {
+    "proxy-deep": "^3.0.0"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
+  "repository": "git://github.com/wolfpat01/param-handler.git" 
+}
