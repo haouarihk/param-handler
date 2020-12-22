@@ -14,8 +14,12 @@
     "version": "npm run format && git add -A src",
     "postversion": "git push && git push --tags"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "query",
+    "location",
+    "browser"
+  ],
+  "author": "wolfpat01 (haithem2001@gmail.com)",
   "license": "ISC",
   "devDependencies": {
     "prettier": "^2.2.1",
@@ -29,5 +33,15 @@
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
   },
-  "repository": "git://github.com/wolfpat01/param-handler.git" 
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/wolfpat01/param-handler.git"
+  },
+  "bugs": {
+    "url": "https://github.com/wolfpat01/param-handler/issues"
+  },
+  "homepage": "https://github.com/wolfpat01/param-handler#readme",
+  "directories": {
+    "lib": "lib"
+  }
 }

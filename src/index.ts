@@ -1,32 +1,58 @@
 
 
+
+
 export var paramsHandler = (p: { specialGetter: () => string, specialSetter: (newSet: string) => void }) => {
+
+
+
+    let triggerListener = (el: string, k: any) => {
+        document.dispatchEvent(new CustomEvent(el, k));
+    }
 
 
     let specialGetter = () => {
         return location.search
     }
-    if (p.specialGetter!=undefined)
+    if (p.specialGetter != undefined)
         specialGetter = p.specialGetter
 
     let specialSetter = (newSet: string) => {
         window.history.pushState('page2', 'Title', `?${newSet}`)
     }
-    if (p.specialSetter!=undefined)
+    if (p.specialSetter != undefined)
         specialSetter = p.specialSetter
 
 
     return {
         set: (name: string, value: string) => {
-            let params:any =locationToObj(specialGetter())
+            let params: any = locationToObj(specialGetter())
             params[name] = value;
             specialSetter(ObjTolocation(params))
+            // trigger specific
+            triggerListener(`searchLocationspecific_${name}`, value)
+            // trigger all
+            triggerListener("searchLocationChanged", value)
         },
         get: (name: string) => {
             return locationToObj(specialGetter())[name]
         },
         exists: (name: string) => {
-            return locationToObj(specialGetter())[name]!=undefined
+            return locationToObj(specialGetter())[name] != undefined
+        },
+        on: (event: string, a: any, b: EventListenerOrEventListenerObject) => {
+            switch (event) {
+                case "change":
+                    if (typeof a == typeof "string") {
+                        document.addEventListener(`searchLocationspecific_${a}`, b, false)
+                    } else
+                        document.addEventListener("searchLocationChanged", a, false)
+                    break;
+
+                default:
+                    console.error("the event that you specified doens't exists")
+                    break;
+            }
         }
     }
 }
