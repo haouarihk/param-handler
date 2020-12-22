@@ -1,9 +1,16 @@
 
+interface Init{
+    set:Function;
+    get:Function;
+    readOnlyParams:any;
+    exists:(type:string)=>boolean;
+    on:(event:string,a:any,b:any)=>void;
+}
 
 export var paramsHandler = (window: Window) => {
     let params: any = {}
     let triggerListener = (el: string, k: any) => {
-        triggerEvent(window.document, window.document.body, el)
+        triggerEvent(window.document, window.document, el)
     }
 
     let specialGetter = () => {
@@ -14,8 +21,7 @@ export var paramsHandler = (window: Window) => {
         window.history.pushState('page2', 'Title', newSet)
     }
 
-
-    return {
+    let init:Init = {
         get readOnlyParams() {
             params = locationToObj(specialGetter())
             return params
@@ -40,15 +46,15 @@ export var paramsHandler = (window: Window) => {
         exists: (name: string) => {
             return locationToObj(specialGetter())[name] != undefined
         },
-        on: (event: string, a: any, b: EventListenerOrEventListenerObject) => {
+        on: (event: string, a: any, b: any) => {
             switch (event) {
                 case "change":
                     if (typeof a == typeof "string") {
                         console.log("type2")
-                        window.document.addEventListener(`searchLocationspecific_${a}`, b, false)
+                        window.document.addEventListener(`searchLocationspecific_${a}`,()=>b(init), false)
                     } else{
                         console.log("type1")
-                        window.document.addEventListener("searchLocationChanged", a, false)
+                        window.document.addEventListener("searchLocationChanged", ()=>a(init), false)
                     }
                     break;
 
@@ -58,6 +64,7 @@ export var paramsHandler = (window: Window) => {
             }
         }
     }
+    return init
 }
 
 
@@ -98,7 +105,7 @@ export function ObjTolocation(obj: any): string {
 }
 
 
-function triggerEvent(document: Document, el: Element, type: string) {
+function triggerEvent(document: Document, el: any, type: string) {
     // IE9+ and other modern browsers
     if ('createEvent' in document) {
         var e = document.createEvent('HTMLEvents');
