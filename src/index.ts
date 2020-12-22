@@ -68,7 +68,6 @@ export var paramsHandler = (window: Window) => {
 }
 
 
-
 export function locationToObj(searchstr: string): any {
     let __k = searchstr.split("?")
     let urlparams: string = __k.slice(1, __k.length).join("") || "";
