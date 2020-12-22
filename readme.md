@@ -15,7 +15,7 @@ npm install param-handler
 
 # How to use:
 
-## using nodejs:
+## using browser:
 
 ```js
 // import it from npm
@@ -24,7 +24,8 @@ let ph = paramsHandler()
 
 // example
 ph.set("page","main")
-ph.get("page")
+ph.get("page") // returns "main"
+ph.readOnly // returns {page:"main"}
 ph.exists("page") // return true or false
 ph.on("change", (newsearch)=>{ //  whenever location search changes
     console.log(`location search has changed to ${newpage}`)

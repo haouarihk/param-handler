@@ -1,32 +1,32 @@
 
 
-
-
-export var paramsHandler = (p: { specialGetter: () => string, specialSetter: (newSet: string) => void }) => {
-
-
-
+export var paramsHandler = (window: Window) => {
+    let params: any = {}
     let triggerListener = (el: string, k: any) => {
-        document.dispatchEvent(new CustomEvent(el, k));
+        triggerEvent(window.document, window.document.body, el)
     }
-
 
     let specialGetter = () => {
-        return location.search
+        return window.location.search
     }
-    if (p.specialGetter != undefined)
-        specialGetter = p.specialGetter
 
     let specialSetter = (newSet: string) => {
-        window.history.pushState('page2', 'Title', `?${newSet}`)
+        window.history.pushState('page2', 'Title', newSet)
     }
-    if (p.specialSetter != undefined)
-        specialSetter = p.specialSetter
 
 
     return {
+        get readOnlyParams() {
+            params = locationToObj(specialGetter())
+            return params
+        },
+        set readOnlyParams(np) {
+            console.error("You can't set this value, its readonly.. caon't you read??")
+            console.info("We might add this feature in the future.")
+        }
+        ,
         set: (name: string, value: string) => {
-            let params: any = locationToObj(specialGetter())
+            params = locationToObj(specialGetter())
             params[name] = value;
             specialSetter(ObjTolocation(params))
             // trigger specific
@@ -44,9 +44,12 @@ export var paramsHandler = (p: { specialGetter: () => string, specialSetter: (ne
             switch (event) {
                 case "change":
                     if (typeof a == typeof "string") {
-                        document.addEventListener(`searchLocationspecific_${a}`, b, false)
-                    } else
-                        document.addEventListener("searchLocationChanged", a, false)
+                        console.log("type2")
+                        window.document.addEventListener(`searchLocationspecific_${a}`, b, false)
+                    } else{
+                        console.log("type1")
+                        window.document.addEventListener("searchLocationChanged", a, false)
+                    }
                     break;
 
                 default:
@@ -59,10 +62,12 @@ export var paramsHandler = (p: { specialGetter: () => string, specialSetter: (ne
 
 
 
-export function locationToObj(location: string): any {
-    let __k = location.split("?")
+export function locationToObj(searchstr: string): any {
+    let __k = searchstr.split("?")
     let urlparams: string = __k.slice(1, __k.length).join("") || "";
+    if (urlparams == '') return {}
     let urlParams: string[] = urlparams.split(`&`);
+
     let params: any = {};
     urlParams.forEach((p) => {
         let lame = p.split(`=`);
@@ -83,9 +88,21 @@ export function locationToObj(location: string): any {
 }
 
 export function ObjTolocation(obj: any): string {
+
     let arr: string[] = []
     Object.keys(obj).forEach(key => {
         arr.push(`${key}=${obj[key]}`)
     })
+
     return `?${arr.join("&")}`
+}
+
+
+function triggerEvent(document: Document, el: Element, type: string) {
+    // IE9+ and other modern browsers
+    if ('createEvent' in document) {
+        var e = document.createEvent('HTMLEvents');
+        e.initEvent(type, false, true);
+        el.dispatchEvent(e);
+    }
 }

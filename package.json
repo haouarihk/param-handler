@@ -1,5 +1,5 @@
 {
-  "name": "param-handler",
+  "name": "@wolfpat01/param-handler",
   "version": "1.0.0",
   "description": "this is a library that allowes you to control query params location search",
   "main": "./lib/index.js",
@@ -22,12 +22,16 @@
   "author": "wolfpat01 (haithem2001@gmail.com)",
   "license": "ISC",
   "devDependencies": {
+    "jsdom": "^16.4.0",
     "prettier": "^2.2.1",
     "tslint": "^6.1.3",
     "tslint-config-prettier": "^1.18.0",
     "typescript": "^4.1.3"
   },
   "dependencies": {
+    "custom-event": "^1.0.1",
+    "custom-event-js": "^1.0.2",
+    "customevent": "^1.0.1",
     "proxy-deep": "^3.0.0"
   },
   "publishConfig": {
