@@ -2,7 +2,7 @@
 interface Init{
     set:Function;
     get:Function;
-    readOnlyParams:any;
+    params:any;
     exists:(type:string)=>boolean;
     on:(event:string,a:any,b:any)=>void;
 }
@@ -22,11 +22,11 @@ export var paramsHandler = (window: Window) => {
     }
 
     let init:Init = {
-        get readOnlyParams() {
+        get params() {
             params = locationToObj(specialGetter())
             return params
         },
-        set readOnlyParams(np) {
+        set params(np) {
             console.error("You can't set this value, its readonly.. caon't you read??")
             console.info("We might add this feature in the future.")
         }
