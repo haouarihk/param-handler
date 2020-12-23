@@ -21,13 +21,12 @@ npm install param-handler
 
 // example
 let { JSDOM } = require("jsdom")
-const l = new JSDOM(`<!DOCTYPE html><p>Hello world</p>`, { url: "https://www.google.com/" });
-const window = l.window
+const {window} = new JSDOM(`<!DOCTYPE html><p>Hello world</p>`, { url: "https://www.google.com/" });
 let { paramsHandler } = require("./lib/index")
 
 
 
-let ph = paramsHandler(window, l)
+let ph = paramsHandler(window)
 
 ph.on("change", "page", (a) => {
     console.log(`PAGE HAS CHANGED To ${a.get("page")}`) // get trigged when page changes
