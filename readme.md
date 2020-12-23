@@ -71,6 +71,7 @@ let { paramsHandler } = require("param-handler")
 let ph = paramsHandler(window) // pass the window from the virtual dom
 ```
 
+
 Then you can start using it!
 
 ## How can i update a specific variable in the query search location:
