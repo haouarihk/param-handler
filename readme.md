@@ -18,19 +18,29 @@ npm install param-handler
 ## using browser:
 
 ```js
-// import it from npm
-const {paramsHandler} = require("param-handler");
-let ph = paramsHandler()
 
 // example
-ph.set("page","main")
-ph.get("page") // returns "main"
-ph.readOnly // returns {page:"main"}
-ph.exists("page") // return true or false
-ph.on("change", (newsearch)=>{ //  whenever location search changes
-    console.log(`location search has changed to ${newpage}`)
+let { JSDOM } = require("jsdom")
+const l = new JSDOM(`<!DOCTYPE html><p>Hello world</p>`, { url: "https://www.google.com/" });
+const window = l.window
+let { paramsHandler } = require("./lib/index")
+
+
+
+let ph = paramsHandler(window, l)
+
+ph.on("change", "page", (a) => {
+    console.log(`PAGE HAS CHANGED To ${a.get("page")}`) // get trigged when page changes
 })
-ph.on("change", "page", (newpage)=>{ // whenever a specific param changes
-    console.log(`page has changed to ${newpage}`)
+
+ph.on("change", (a) => {
+    console.log(`location search HAS CHANGED To ${a.readOnlyParams}`) // get trigged when page changes
 })
+console.log("readOnlyParams-", ph.readOnlyParams) // returns {}
+ph.set("page", "main") // return void
+ph.set("page", "last") // return void
+console.log("readOnlyParams-", ph.readOnlyParams) // returns {page:"main"}
+console.log("page exists-", ph.exists("page")) // return true or false
+console.log("get page-", ph.get("page")) // returns "main"
+console.log("readOnlyParams-", ph.readOnlyParams) // returns {page:"main"}
 ```
