@@ -1,8 +1,9 @@
 {
   "name": "param-handler",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "this is a library that allowes you to control query params location search",
-  "main": "./src/index.ts",
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
   "scripts": {
     "test": "echo \"hello\"",
     "build": "tsc",
