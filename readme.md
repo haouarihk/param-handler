@@ -71,7 +71,7 @@ console.log(`name_of_the_variable has the value of ${ph.get("name_of_the_variabl
 console.log(`the fancy object ${ph.params}`)
 ```
 
-# How can i check if a variable exists:
+## How can i check if a variable exists:
 
 ```js
 console.log(`does name_of_the_variable exists?`)
