@@ -15,7 +15,7 @@ npm install param-handler
 
 # How to use:
 
-## using browser:
+## using nodejs:
 
 ```js
 
