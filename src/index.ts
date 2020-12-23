@@ -1,3 +1,5 @@
+import queryString = require('query-string');
+
 
 interface Init {
     set: Function;
@@ -132,32 +134,10 @@ export function ParamsHandler(window: Window) {
 
 
 export function locationToObj(searchstr: string): any {
-    let __k = searchstr.split("?")
-    let urlparams: string = __k.slice(1, __k.length).join("") || "";
-    if (urlparams == '') return {}
-    let urlParams: string[] = urlparams.split(`&`);
-
-    let params: any = {};
-    urlParams.forEach((p) => {
-        let lame = p.split(`=`);
-
-        let one = lame[0];
-        let lame2: any = "";
-        if (lame.length === 1) {
-            lame2 = true;
-        } else {
-            lame2 = lame.splice(1, lame.length - 1).join(`=`);
-            lame2 = lame2 == "true" ? true : decodeURI(lame2);
-            lame2 = lame2 == "false" ? false : decodeURI(lame2);
-        }
-
-        params[one] = lame2
-    });
-    return params
+    return  queryString.parse(searchstr)
 }
 
 export function ObjTolocation(obj: any): string {
-
     let arr: string[] = []
     Object.keys(obj).forEach(key => {
         arr.push(`${key}=${obj[key]}`)
