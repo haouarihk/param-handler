@@ -30,8 +30,21 @@ Its easy, you will need jsdom if you don't have a dom(plain nodejs),
 first of all you need to import the package:
 
 ```js
-let { paramsHandler } = require("param-handler")
+let ParamsHandler = require("param-handler") 
+// or
+import ParamsHandler from "param-handler"
+```
+
+Then
+
+```js
 let ph = paramsHandler(window) // pass the window from the virtual dom
+```
+
+or you can directly do
+
+```js
+let ph = require("param-handler")(window)// pass the window from the virtual dom
 ```
 
 
@@ -58,6 +71,7 @@ ph.on("change", "name_of_the_variable", (new_value)=>{
     console.log(`name_of_the_variable has changed to ${new_value}!`)
 })
 ```
+note that you can use the second argument inside the callbackfunction to call "this".
 
 ### 2- Or you can just get the value of that specific variable:
 

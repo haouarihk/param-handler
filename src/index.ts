@@ -7,7 +7,7 @@ interface Init{
     on:(event:string,a:any,b:any)=>void;
 }
 
-export var paramsHandler = (window: Window) => {
+export default function paramsHandler(window: Window) {
     let params: any = {}
     let triggerListener = (el: string, k: any) => {
         triggerEvent(window.document, window.document, el)
@@ -52,7 +52,7 @@ export var paramsHandler = (window: Window) => {
                     if (typeof a == typeof "string") {
                         window.document.addEventListener(`searchLocationspecific_${a}`,()=>b(init.get(a), init), false)
                     } else{
-                        window.document.addEventListener("searchLocationChanged", ()=>a(init), false)
+                        window.document.addEventListener("searchLocationChanged", ()=>a(init.params, init), false)
                     }
                     break;
 
