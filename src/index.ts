@@ -22,7 +22,7 @@ export class QParamer {
     }
 
     specialGetter() {
-        return this.window.location.search
+        return decodeURIComponent(this.window.location.search)
     }
 
     specialSetter(newSet: string) {
@@ -39,7 +39,7 @@ export class QParamer {
     }
     set(name: string, value: string) {
         this._params = locationToObj(this.specialGetter())
-        this._params[name] = value
+        this._params[name] = encodeURIComponent(value)
         this.specialSetter(ObjTolocation(this._params))
         // trigger specific
         this.triggerListener(`searchLocationspecific_${name}`, value)
@@ -81,11 +81,11 @@ export function ParamsHandler(window: Window) {
     }
 
     let specialGetter = () => {
-        return window.location.search
+        return decodeURIComponent(window.location.search)
     }
 
     let specialSetter = (newSet: string) => {
-        window.history.pushState('page2', 'Title', newSet)
+        window.history.pushState('page2', 'Title', (newSet))
     }
 
     let init: Init = {
@@ -100,7 +100,7 @@ export function ParamsHandler(window: Window) {
 
         set: (name: string, value: string) => {
             params = locationToObj(specialGetter())
-            params[name] = value
+            params[name] = encodeURIComponent(value)
             specialSetter(ObjTolocation(params))
             // trigger specific
             triggerListener(`searchLocationspecific_${name}`, value)
@@ -140,7 +140,7 @@ export function locationToObj(searchstr: string): any {
 export function ObjTolocation(obj: any): string {
     let arr: string[] = []
     Object.keys(obj).forEach(key => {
-        arr.push(`${key}=${obj[key]}`)
+        arr.push(`${encodeURIComponent(key)}=${encodeURIComponent(obj[key])}`)
     })
 
     return `?${arr.join("&")}`

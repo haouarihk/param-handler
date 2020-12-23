@@ -19,7 +19,7 @@ ph.on("change", (a) => {
     console.log(`location search HAS CHANGED To ${JSON.stringify(a)}`) // get trigged when page changes
 })
 console.log("readOnlyParams-", ph.params) // returns {}
-ph.set("page", "main") // return void
+ph.set("page", "main&kk=3") // return void
 ph.set("page", "last") // return void
 console.log("readOnlyParams-", ph.params) // returns {page:"main"}
 console.log("page exists-", ph.exists("page")) // return true or false
