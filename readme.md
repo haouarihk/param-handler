@@ -30,9 +30,9 @@ Its easy, you will need jsdom if you don't have a dom(plain nodejs),
 first of all you need to import the package:
 
 ```js
-let ParamsHandler = require("param-handler") 
+let {ParamsHandler} = require("param-handler") 
 // or
-import ParamsHandler from "param-handler"
+import {ParamsHandler} from "param-handler"
 ```
 
 Then
@@ -41,12 +41,19 @@ Then
 let ph = paramsHandler(window) // pass the window from the virtual dom
 ```
 
-or you can directly do
+or if you're into classes
 
 ```js
-let ph = require("param-handler")(window)// pass the window from the virtual dom
+let {QParamer} = require("param-handler") 
+// or
+import {QParamer} from "param-handler"
 ```
 
+Then
+
+```js
+let ph = new QParamer(window) // pass the window from the virtual dom
+```
 
 Then you can start using it!
 
