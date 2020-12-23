@@ -1,6 +1,6 @@
 {
   "name": "param-handler",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "this is a library that allowes you to control query params location search",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",

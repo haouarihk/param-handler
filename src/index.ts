@@ -50,10 +50,8 @@ export var paramsHandler = (window: Window) => {
             switch (event) {
                 case "change":
                     if (typeof a == typeof "string") {
-                        console.log("type2")
-                        window.document.addEventListener(`searchLocationspecific_${a}`,()=>b(init), false)
+                        window.document.addEventListener(`searchLocationspecific_${a}`,()=>b(init.get(a), init), false)
                     } else{
-                        console.log("type1")
                         window.document.addEventListener("searchLocationChanged", ()=>a(init), false)
                     }
                     break;
