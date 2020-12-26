@@ -1,7 +1,7 @@
 let { JSDOM } = require("jsdom")
-const {window} = new JSDOM(`<!DOCTYPE html><p>Hello world</p>`, { url: "https://www.google.com/" });
+const { window } = new JSDOM(`<!DOCTYPE html><p>Hello world</p>`, { url: "https://www.google.com/" });
 
-let {ParamsHandler, QParamer} = require("./lib/index")
+let { ParamsHandler, QParamer } = require("./lib/index")
 
 
 let ph = new QParamer(window)
