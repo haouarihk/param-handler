@@ -12,7 +12,7 @@ interface Init {
 /** this is the class that is gonna make your life 1% easier, if you're into classes 
  * @param window is the window from your virtual dom
 */
-export class QParamer {
+export default class PH {
     window: Window
     private _params: any
 
@@ -71,9 +71,12 @@ export class QParamer {
 
     /** this function gets a variable value
      * @param name is the name of the variable that you wanna get its value
+     * @param dif is the default value when its not set
+     * @param reverse this will be used to reverse the answer only when its a boolean
+     * 
      */
-    get(name: string) {
-        return locationToObj(this.specialGetter())[name]
+    get(name: string, dif?: any, reverse: boolean = false) {
+        return valueHandler(locationToObj(this.specialGetter())[name], dif, reverse)
     }
 
     /** this function checks if a variable exists
@@ -145,12 +148,15 @@ export function ParamsHandler(window: Window) {
             // trigger all
             triggerListener("searchLocationChanged", value)
         },
-        get: (name: string) => {
-            return locationToObj(specialGetter())[name]
+
+        get: (name: string, oud?: any, reverse: boolean = false) => {
+            return valueHandler(locationToObj(specialGetter())[name], oud, reverse)
         },
+
         exists: (name: string) => {
             return locationToObj(specialGetter())[name] != undefined
         },
+
         on: (event: string, a: any, b: any) => {
             switch (event) {
                 case "change":
@@ -192,4 +198,14 @@ export function triggerEvent(document: Document, el: any, type: string) {
         e.initEvent(type, false, true);
         el.dispatchEvent(e);
     }
+}
+
+
+/** handles undefenition */
+export function valueHandler(prm: any, oud?: any, reverse?: boolean) {
+    if (prm === undefined) return oud;
+    else if (prm === null) return !reverse;
+    else if (typeof prm === typeof "" || typeof prm === typeof 5)
+        return prm;
+    else return prm ? !reverse : reverse;
 }

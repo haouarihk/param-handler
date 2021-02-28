@@ -25,34 +25,26 @@ npm install param-handler
 
 ## How can i test it:
 
+### Major Update changed the class name:
+
 Its easy, you will need jsdom if you don't have a dom(plain nodejs),
 
 first of all you need to import the package:
 
+
 ```js
-let {ParamsHandler} = require("param-handler") 
+const _PH = require("param-handler"), 
+    {PH} = require("param-handler") 
 // or
-import {ParamsHandler} from "param-handler"
+import _PH, {PH} from "param-handler" 
+
+// _PH and PH are the same thing
 ```
 
 Then
 
 ```js
-let ph = paramsHandler(window) // pass the window from the virtual dom
-```
-
-or if you're into classes
-
-```js
-let {QParamer} = require("param-handler") 
-// or
-import {QParamer} from "param-handler"
-```
-
-Then
-
-```js
-let ph = new QParamer(window) // pass the window from the virtual dom
+let ph = new PH(window) // pass the window from the virtual dom
 ```
 
 Then you can start using it!
@@ -82,8 +74,12 @@ note that you can use the second argument inside the callbackfunction to call "t
 
 ### 2- Or you can just get the value of that specific variable:
 
+ph.get("name_of_the_variable", "default_value", "reverse_if_boolean")
+
 ```js
-console.log(`name_of_the_variable has the value of ${ph.get("name_of_the_variable")}`)
+console.log(`
+    name_of_the_variable has the value of 
+    ${ph.get("name_of_the_variable")}`)
 ```
 
 ## How can i get that fancy object thingy:

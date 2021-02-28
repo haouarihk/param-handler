@@ -1,15 +1,18 @@
 let { JSDOM } = require("jsdom")
 const { window } = new JSDOM(`<!DOCTYPE html><p>Hello world</p>`, { url: "https://www.google.com/" });
 
-let { ParamsHandler, QParamer } = require("./lib/index")
+// like this
+let { ParamsHandler, Param } = require("./lib/index")
 
+// or like this
+import _Param from "./lib/index"
 
 let ph = new QParamer(window)
-
-
-
-
 //let ph = ParamsHandler(window)
+
+let _ph = new _Param(window)
+
+
 
 ph.on("change", "page", (a) => {
     console.log(`PAGE HAS CHANGED To ${a}`) // get trigged when page changes
