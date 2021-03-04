@@ -5,7 +5,6 @@ interface Init {
     exists: (type: string) => boolean;
     on: (event: string, a: any, b: any) => void;
 }
-
 /** this is the class that is gonna make your life 1% easier, if you're into classes
  * @param window is the window from your virtual dom
 */
@@ -22,7 +21,7 @@ export default class PH {
     constructor(window: Window);
     triggerListener(el: string, k: any): void;
     get params(): any;
-    set params(np: any);
+    set params(_np: any);
     /** this function setts a variable to a value
      * @param name is the name of the variable
      * @param value is the new value for the variable
@@ -56,4 +55,4 @@ export declare function ObjTolocation(obj: any): string;
 export declare function triggerEvent(document: Document, el: any, type: string): void;
 /** handles undefenition */
 export declare function valueHandler(prm: any, oud?: any, reverse?: boolean): any;
-export { };
+export {};
