@@ -5,6 +5,7 @@ interface Init {
     exists: (type: string) => boolean;
     on: (event: string, a: any, b: any) => void;
 }
+
 /** this is the class that is gonna make your life 1% easier, if you're into classes
  * @param window is the window from your virtual dom
 */
@@ -55,4 +56,4 @@ export declare function ObjTolocation(obj: any): string;
 export declare function triggerEvent(document: Document, el: any, type: string): void;
 /** handles undefenition */
 export declare function valueHandler(prm: any, oud?: any, reverse?: boolean): any;
-export {};
+export { };
