@@ -40,16 +40,12 @@ export default class PH {
         triggerEvent(this.window.document, this.window.document, el)
     }
 
-
-
-
-
     get params() {
         this._params = locationToObj(this.specialGetter())
         return this._params
     }
 
-    set params(np) {
+    set params(_np) {
         console.error("You can't set this value, its readonly.. caon't you read??")
         console.info("We might add this feature in the future.")
     }
@@ -109,8 +105,6 @@ export default class PH {
 
 
 }
-
-
 
 /** this will create the object
  * @param window is the window from your virtual dom
@@ -176,7 +170,6 @@ export function ParamsHandler(window: Window) {
     return init
 }
 
-
 export function locationToObj(searchstr: string): any {
     return queryString.parse(searchstr)
 }
@@ -190,7 +183,6 @@ export function ObjTolocation(obj: any): string {
     return `?${arr.join("&")}`
 }
 
-
 export function triggerEvent(document: Document, el: any, type: string) {
     // IE9+ and other modern browsers
     if ('createEvent' in document) {
@@ -199,7 +191,6 @@ export function triggerEvent(document: Document, el: any, type: string) {
         el.dispatchEvent(e);
     }
 }
-
 
 /** handles undefenition */
 export function valueHandler(prm: any, oud?: any, reverse?: boolean) {
