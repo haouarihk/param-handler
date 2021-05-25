@@ -195,8 +195,8 @@ export function triggerEvent(document: Document, el: any, type: string) {
 /** handles undefenition */
 export function valueHandler(prm: any, oud?: any, reverse: boolean = false) {
     // true or false
-    if (prm == true) return !reverse;
-    if (prm == false) return reverse;
+    if (prm == "true") return !reverse;
+    if (prm == "false") return reverse;
 
     // undefined means unset
     if (prm === undefined) return oud;
