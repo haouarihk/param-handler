@@ -193,10 +193,21 @@ export function triggerEvent(document: Document, el: any, type: string) {
 }
 
 /** handles undefenition */
-export function valueHandler(prm: any, oud?: any, reverse?: boolean) {
+export function valueHandler(prm: any, oud?: any, reverse: boolean = false) {
+    // true or false
+    if (prm == true) return !reverse;
+    if (prm == false) return reverse;
+
+    // undefined means unset
     if (prm === undefined) return oud;
+
+    // null means it's selected => true
     else if (prm === null) return !reverse;
-    else if (typeof prm === typeof "" || typeof prm === typeof 5)
-        return prm;
-    else return prm ? !reverse : reverse;
+
+    // on number
+    else if (!isNaN(parseFloat(prm)))
+        return parseFloat(prm);
+
+    // on string
+    else return prm;
 }
