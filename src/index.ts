@@ -55,15 +55,19 @@ export default class PH {
      * @param value is the new value for the variable
      * @returns void
     */
-    set(name: string, value: any) {
-        this._params = locationToObj(this.specialGetter())
+    set(name: string, value: any = true) {
+        const _inter = this.specialGetter()
+        this._params = locationToObj(_inter)
 
         // check if unset then don't add it to the query
-        if (value == undefined)
-            if (!this._params[name]) return;
+        // if (value == undefined)
+        //     if (!this._params[name]) return;
 
-        this._params[name] = encodeURIComponent(value)
-        this.specialSetter(ObjTolocation(this._params))
+        this._params[name] = value === true || value === false ? value : encodeURIComponent(value)
+
+        const _outer = ObjTolocation(this._params)
+
+        this.specialSetter(_outer)
         // trigger specific
         this.triggerListener(`searchLocationspecific_${name}`, value)
         // trigger all
@@ -176,13 +180,43 @@ export function ParamsHandler(window: Window) {
 }
 
 export function locationToObj(searchstr: string): any {
-    return queryString.parse(searchstr)
+    var __k = searchstr.split("?");
+    var urlparams = __k.slice(1, __k.length).join("") || "";
+    if (urlparams == '')
+        return {};
+    var urlParams = urlparams.split("&");
+    var params: any = {};
+    urlParams.forEach(function (p) {
+        var lame = p.split("=");
+        var one = lame[0];
+        var lame2: any = "";
+        if (lame.length === 1) {
+            lame2 = true;
+        }
+        else {
+            lame2 = lame.splice(1, lame.length - 1).join("=");
+            lame2 = valueHandler(lame2, false);
+
+            // if (!isNaN(parseFloat(lame2)))
+            //     lame2 = parseFloat(lame2)
+            // else {
+            //     lame2 = lame2 == "true" ? true : decodeURI(lame2);
+            //     lame2 = lame2 == "false" ? false : decodeURI(lame2);
+            // }
+        }
+        params[one] = lame2;
+    });
+    //console.log(params)
+    return params;
 }
 
 export function ObjTolocation(obj: any): string {
     let arr: string[] = []
     Object.keys(obj).forEach(key => {
-        arr.push(`${encodeURIComponent(key)}=${encodeURIComponent(obj[key])}`)
+        if (obj[key] === true)
+            arr.push(`${encodeURIComponent(key)}`);
+        else
+            arr.push(`${encodeURIComponent(key)}=${encodeURIComponent(obj[key])}`)
     })
 
     return `?${arr.join("&")}`
@@ -200,18 +234,19 @@ export function triggerEvent(document: Document, el: any, type: string) {
 /** handles undefenition */
 export function valueHandler(prm: any, oud?: any, reverse: boolean = false) {
     // true or false
-    if (prm == "true") return !reverse;
-    if (prm == "false") return reverse;
+    if (!isNaN(parseFloat(prm)))
+        return parseFloat(prm);
+    else {
+        if (prm == "true" || prm === true) return !reverse;
+        if (prm == "false" || prm === false) return reverse;
+    }
 
     // undefined means unset
-    if (prm === undefined) return oud;
+    if (prm === undefined || prm == "undefined") return oud;
 
     // null means it's selected => true
     else if (prm === null) return !reverse;
 
-    // on number
-    else if (!isNaN(parseFloat(prm)))
-        return parseFloat(prm);
 
     // on string
     else return prm;
