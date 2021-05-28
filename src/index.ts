@@ -53,10 +53,15 @@ export default class PH {
     /** this function setts a variable to a value
      * @param name is the name of the variable
      * @param value is the new value for the variable
-     * @returns null
+     * @returns void
     */
-    set(name: string, value: string) {
+    set(name: string, value: any) {
         this._params = locationToObj(this.specialGetter())
+
+        // check if unset then don't add it to the query
+        if (value == undefined)
+            if (!this._params[name]) return;
+
         this._params[name] = encodeURIComponent(value)
         this.specialSetter(ObjTolocation(this._params))
         // trigger specific
