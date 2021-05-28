@@ -25,9 +25,9 @@ export default class PH {
     /** this function setts a variable to a value
      * @param name is the name of the variable
      * @param value is the new value for the variable
-     * @returns null
+     * @returns void
     */
-    set(name: string, value: string): void;
+    set(name: string, value: any): void;
     /** this function gets a variable value
      * @param name is the name of the variable that you wanna get its value
      * @param dif is the default value when its not set
